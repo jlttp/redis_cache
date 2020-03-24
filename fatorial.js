@@ -18,9 +18,13 @@ app.listen(8081, () => {
     console.log(`App listening on port ${PORT}`);
 })
 
-app.listen(6379, () => {
-    console.log(`Redis running on port ${REDIS_PORT}`);
-})
+redisClient.on('connect', () => {
+    console.log('Redis is ready');
+});
+   
+redisClient.on('error', (e) => {
+    console.log('Redis error', e);
+});
 
 const getCache = (key) => {
     return new Promise((resolve, reject) => {
